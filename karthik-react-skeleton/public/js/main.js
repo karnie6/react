@@ -19026,6 +19026,96 @@ process.umask = function() { return 0; };
 
 },{}],159:[function(require,module,exports){
 var React = require('react');
+var NumberField = require('./NumberField.jsx');
+
+var Calculator = React.createClass({
+  displayName: 'Calculator',
+
+  getInitialState: function () {
+    return { resultText: "" };
+  },
+  add: function () {
+    var number1 = this.refs.numberField1.state.value;
+    var number2 = this.refs.numberField2.state.value;
+    var result = parseInt(number1) + parseInt(number2);
+    this.setState({ resultText: result });
+  },
+  subtract: function () {
+    var number1 = this.refs.numberField1.state.value;
+    var number2 = this.refs.numberField2.state.value;
+    var result = parseInt(number1) - parseInt(number2);
+    this.setState({ resultText: result });
+  },
+  multiply: function () {
+    var number1 = this.refs.numberField1.state.value;
+    var number2 = this.refs.numberField2.state.value;
+    var result = parseInt(number1) * parseInt(number2);
+    this.setState({ resultText: result });
+  },
+  divide: function () {
+    var number1 = this.refs.numberField1.state.value;
+    var number2 = this.refs.numberField2.state.value;
+    var result = parseInt(number1) / parseInt(number2);
+    this.setState({ resultText: result });
+  },
+  clear: function () {
+    this.setState({ resultText: "" });
+    this.refs.numberField1.clear();
+    this.refs.numberField2.clear();
+  },
+  render: function () {
+    return React.createElement(
+      'div',
+      { className: 'col-sm-3' },
+      React.createElement(
+        'div',
+        { className: 'panel panel-default' },
+        React.createElement(
+          'div',
+          { className: 'panel-body' },
+          React.createElement(NumberField, { sampleNumber: '1337', ref: 'numberField1' }),
+          React.createElement(NumberField, { sampleNumber: '2108', ref: 'numberField2' }),
+          React.createElement(
+            'button',
+            { className: 'btn btn-primary', onClick: this.add },
+            '+ Add'
+          ),
+          React.createElement(
+            'button',
+            { className: 'btn btn-primary', onClick: this.subtract },
+            '- Subtract'
+          ),
+          React.createElement(
+            'button',
+            { className: 'btn btn-primary', onClick: this.multiply },
+            '* Multiply'
+          ),
+          React.createElement(
+            'button',
+            { className: 'btn btn-primary', onClick: this.divide },
+            '/ Divide'
+          ),
+          React.createElement(
+            'div',
+            null,
+            'Result : ',
+            this.state.resultText
+          ),
+          React.createElement(
+            'button',
+            { className: 'btn btn-primary', onClick: this.clear },
+            'Clear'
+          )
+        )
+      )
+    );
+  }
+});
+
+module.exports = Calculator;
+
+},{"./NumberField.jsx":162,"react":157}],160:[function(require,module,exports){
+var React = require('react');
 var ListItem = require('./ListItem.jsx');
 
 var List = React.createClass({
@@ -19070,7 +19160,7 @@ var List = React.createClass({
 
 module.exports = List;
 
-},{"./ListItem.jsx":160,"react":157}],160:[function(require,module,exports){
+},{"./ListItem.jsx":161,"react":157}],161:[function(require,module,exports){
 var React = require('react');
 
 var ListItem = React.createClass({
@@ -19087,14 +19177,37 @@ var ListItem = React.createClass({
 
 module.exports = ListItem;
 
-},{"react":157}],161:[function(require,module,exports){
+},{"react":157}],162:[function(require,module,exports){
+var React = require('react');
+
+var NumberField = React.createClass({
+  displayName: "NumberField",
+
+  getInitialState: function () {
+    return { value: "" };
+  },
+  onChange: function (e) {
+    this.setState({ value: e.target.value });
+  },
+  clear: function () {
+    this.setState({ value: "" });
+  },
+  render: function () {
+    return React.createElement("input", { className: "form-control", placeholder: "NUMBER e.g. " + this.props.sampleNumber, onChange: this.onChange, value: this.state.value });
+  }
+});
+
+module.exports = NumberField;
+
+},{"react":157}],163:[function(require,module,exports){
 var React = require('react');
 var List = require('./components/List.jsx');
+var Calculator = require('./components/Calculator.jsx');
 var ReactDom = require('react-dom');
 
 var items = [{ "id": 1, "name": "karthik1" }, { "id": 2, "name": "karthik2" }];
 
-ReactDom.render(React.createElement(List, null), document.getElementById('karthiklist'));
+ReactDom.render(React.createElement(Calculator, null), document.getElementById('karthiklist'));
 //ReactDom.render(<div>SUP2</div>, document.getElementById('karthiklist'));
 
-},{"./components/List.jsx":159,"react":157,"react-dom":1}]},{},[161]);
+},{"./components/Calculator.jsx":159,"./components/List.jsx":160,"react":157,"react-dom":1}]},{},[163]);
