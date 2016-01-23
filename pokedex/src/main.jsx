@@ -1,5 +1,5 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-var PokemonList = require('./components/PokemonList.jsx');
+var routes = require('./routes.jsx');
 
-ReactDOM.render(<PokemonList />, document.getElementById('pokemons'));
+ReactDOM.render(routes, document.getElementById('pokemons'));

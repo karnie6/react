@@ -24,6 +24,13 @@ var PokemonStore = Reflux.createStore({
         //now fire a trigger so that view components are refreshed
     }.bind(this));
   },
+  getPokemonDetail: function(pokemonID) {
+    HTTP.get('/api/v1/pokemon/' + pokemonID)
+    .then(function(data) {
+      this.pokemonDetail = data;
+      this.fireUpdate();
+    });
+  },
   //refresh function
   fireUpdate: function() {
     this.trigger('change', this.pokemons);

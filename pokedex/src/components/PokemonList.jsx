@@ -19,7 +19,8 @@ var PokemonList = React.createClass({
     render: function() {
 
       var listItems = this.state.pokemons.map(function(pokemon) {
-          return <div key={pokemon.id}>{pokemon.name}</div>;
+          var hrefString = "/pokemon/" + pokemon.id;
+          return <div><a href={hrefString}>{pokemon.name}</a></div>;
       });
 
       return (<div>{listItems}</div>);
