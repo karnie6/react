@@ -25500,12 +25500,17 @@ process.umask = function() { return 0; };
 var React = require('react');
 
 var Base = React.createClass({
-  displayName: 'Base',
+  displayName: "Base",
 
   render: function () {
     return React.createElement(
-      'div',
-      null,
+      "div",
+      { id: "base" },
+      React.createElement(
+        "a",
+        { href: "/#/pokemons" },
+        "Pokemons"
+      ),
       this.props.children
     );
   }
@@ -25532,6 +25537,7 @@ var PokemonDetail = React.createClass({
   },
   onChange: function (event, data) {
     console.log("ON change!");
+    console.log(data);
     this.setState({ pokemonDetail: data });
   },
   render: function () {
@@ -25572,7 +25578,7 @@ var PokemonList = React.createClass({
     render: function () {
 
         var listItems = this.state.pokemons.map(function (pokemon) {
-            var hrefString = "/pokemon/" + pokemon.id;
+            var hrefString = "/#/pokemon/" + pokemon.id;
             return React.createElement(
                 'div',
                 null,
@@ -25634,10 +25640,12 @@ var PokemonStore = Reflux.createStore({
     }).bind(this));
   },
   getPokemonDetail: function (pokemonID) {
-    HTTP.get('/api/v1/pokemon/' + pokemonID).then(function (data) {
+
+    HTTP.get('/api/v1/pokemon/' + pokemonID).then((function (data) {
+      console.log(data);
       this.pokemonDetail = data;
-      this.fireUpdate();
-    });
+      this.trigger('change', this.pokemonDetail);
+    }).bind(this));
   },
   //refresh function
   fireUpdate: function () {
@@ -25661,7 +25669,7 @@ var Base = require('./components/Base.jsx');
 
 var Routes = React.createElement(
   Router,
-  { history: browserHistory },
+  null,
   React.createElement(
     Route,
     { path: '/', component: Base },

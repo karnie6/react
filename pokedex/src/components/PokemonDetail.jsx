@@ -14,6 +14,7 @@ var PokemonDetail = React.createClass({
     },
     onChange: function(event, data) {
       console.log("ON change!");
+      console.log(data);
       this.setState({pokemonDetail: data});
     },
     render: function() {

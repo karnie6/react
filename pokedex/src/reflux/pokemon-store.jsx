@@ -25,16 +25,19 @@ var PokemonStore = Reflux.createStore({
     }.bind(this));
   },
   getPokemonDetail: function(pokemonID) {
+
+
     HTTP.get('/api/v1/pokemon/' + pokemonID)
     .then(function(data) {
+      console.log(data);
       this.pokemonDetail = data;
-      this.fireUpdate();
-    });
+      this.trigger('change', this.pokemonDetail);
+    }.bind(this));
   },
   //refresh function
   fireUpdate: function() {
     this.trigger('change', this.pokemons);
-  }
+  },
 });
 
 module.exports = PokemonStore;
