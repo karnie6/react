@@ -32,6 +32,8 @@ var ingredients = [
     }
 ];
 
+var leadgens = [];
+
 
 app.get('/ingredients', function(req, res) {
     console.log("GET From SERVER");
@@ -44,5 +46,18 @@ app.post('/ingredients', function(req, res) {
     ingredients.push(ingredient);
     res.status(200).send("Successfully posted ingredient");
 });
+
+app.post('/leadgen', function(req, res) {
+    var leadgen = req.body;
+    console.log(req.body);
+    leadgens.push(leadgen);
+    res.status(200).send("Successfully stored leadgen");
+});
+
+app.get('/leadgen', function(req, res) {
+    console.log("GET From SERVER");
+    res.send(leadgens);
+});
+
 
 app.listen(6069);
